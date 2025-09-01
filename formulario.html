@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #4a00e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #4a00e0;
+            outline: none;
+        }
+        
+        button {
+            background: #4a00e0;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        
+        button:hover {
+            background: #3600a3;
+        }
+        
+        .table-container {
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-edit, .btn-delete {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-edit {
+            background: #ffc107;
+            color: #000;
+            border: none;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-style: italic;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .browser-recommendation {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .browser-list {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .browser-item {
+            text-align: center;
+            margin: 10px;
+        }
+        
+        .browser-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .browser-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Sistema de Cadastro de Alunos</h1>
+            <p class="description">Cadastre e gerencie informações dos alunos</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="name">Nome completo</label>
+                    <input type="text" id="name" required placeholder="Digite o nome do aluno">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="Digite o e-mail do aluno">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" placeholder="Digite o telefone do aluno">
+                </div>
+                
+                <div class="form-group">
+                    <label for="course">Curso</label>
+                    <select id="course" required>
+                        <option value="">Selecione um curso</option>
+                        <option value="Engenharia">Engenharia</option>
+                        <option value="Medicina">Medicina</option>
+                        <option value="Direito">Direito</option>
+                        <option value="Administração">Administração</option>
+                        <option value="Ciência da Computação">Ciência da Computação</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="period">Período</label>
+                    <select id="period" required>
+                        <option value="">Selecione o período</option>
+                        <option value="Matutino">Matutino</option>
+                        <option value="Vespertino">Vespertino</option>
+                        <option value="Noturno">Noturno</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Cadastrar Aluno</button>
+            </form>
+        </div>
+        
+        <div class="table-container">
+            <h2>Alunos Cadastrados</h2>
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Curso</th>
+                        <th>Período</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsList">
+                    <!-- Os dados dos alunos serão inseridos aqui via JavaScript -->
+                </tbody>
+            </table>
+            <div id="noData" class="no-data">Nenhum aluno cadastrado ainda.</div>
+        </div>
+    </div>
+    
+    <div class="browser-recommendation">
+        <h3>Navegadores Recomendados para Executar esta Aplicação</h3>
+        <div class="browser-list">
+            <div class="browser-item">
+                <div class="browser-icon">🌐</div>
+                <div>Google Chrome</div>
+            </div>
+            <div class="browser-item">
+                <div class="browser-icon">🦊</div>
+                <div>Mozilla Firefox</div>
+            </div>
+            <div class="browser-item">
+                <div class="browser-icon">🧩</div>
+                <div>Microsoft Edge</div>
+            </div>
+            <div class="browser-item">
+                <div class="browser-icon">🍎</div>
+                <div>Safari (Mac)</div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido para atividade de programação web - 2023</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentForm = document.getElementById('studentForm');
+            const studentsList = document.getElementById('studentsList');
+            const noData = document.getElementById('noData');
+            let students = JSON.parse(localStorage.getItem('students')) || [];
+            let editingIndex = -1;
+            
+            // Atualizar a exibição da tabela
+            function updateTable() {
+                studentsList.innerHTML = '';
+                
+                if (students.length === 0) {
+                    noData.style.display = 'block';
+                    return;
+                }
+                
+                noData.style.display = 'none';
+                
+                students.forEach((student, index) => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${student.name}</td>
+                        <td>${student.email}</td>
+                        <td>${student.phone || 'Não informado'}</td>
+                        <td>${student.course}</td>
+                        <td>${student.period}</td>
+                        <td class="actions">
+                            <button class="btn-edit" onclick="editStudent(${index})">Editar</button>
+                            <button class="btn-delete" onclick="deleteStudent(${index})">Excluir</button>
+                        </td>
+                    `;
+                    
+                    studentsList.appendChild(row);
+                });
+            }
+            
+            // Adicionar ou editar aluno
+            studentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const student = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    course: document.getElementById('course').value,
+                    period: document.getElementById('period').value
+                };
+                
+                if (editingIndex === -1) {
+                    // Adicionar novo aluno
+                    students.push(student);
+                } else {
+                    // Atualizar aluno existente
+                    students[editingIndex] = student;
+                    editingIndex = -1;
+                    studentForm.querySelector('button').textContent = 'Cadastrar Aluno';
+                }
+                
+                // Salvar no localStorage
+                localStorage.setItem('students', JSON.stringify(students));
+                
+                // Atualizar a tabela
+                updateTable();
+                
+                // Limpar o formulário
+                studentForm.reset();
+            });
+            
+            // Editar aluno
+            window.editStudent = function(index) {
+                const student = students[index];
+                
+                document.getElementById('name').value = student.name;
+                document.getElementById('email').value = student.email;
+                document.getElementById('phone').value = student.phone;
+                document.getElementById('course').value = student.course;
+                document.getElementById('period').value = student.period;
+                
+                editingIndex = index;
+                studentForm.querySelector('button').textContent = 'Atualizar Aluno';
+                
+                // Scroll para o formulário
+                document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth' });
+            };
+            
+            // Excluir aluno
+            window.deleteStudent = function(index) {
+                if (confirm('Tem certeza que deseja excluir este aluno?')) {
+                    students.splice(index, 1);
+                    localStorage.setItem('students', JSON.stringify(students));
+                    updateTable();
+                }
+            };
+            
+            // Inicializar a tabela
+            updateTable();
+        });
+    </script>
+</body>
+</html>
